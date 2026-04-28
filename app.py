@@ -3,20 +3,6 @@ import pandas as pd
 import os
 import numpy as np
 
-# Régression simple sans sklearn
-
-if len(data) > 1:
-    x = data["Heures_Etude"]
-    y = data["Note"]
-
-    # calcul manuel (moindres carrés)
-    a = np.cov(x, y)[0][1] / np.var(x)
-    b = y.mean() - a * x.mean()
-
-    prediction = a * 5 + b
-
-    st.write(f"📌 Note prédite pour 5h d'étude : {prediction:.2f}")
-
 st.set_page_config(page_title="Analyse des données", layout="centered")
 
 st.title("📊 Application de collecte et analyse des données")
@@ -72,20 +58,21 @@ if not data.empty:
     st.scatter_chart(data[["Heures_Etude", "Note"]])
 
 # ==============================
-# 🔹 4. Régression linéaire
+# 🔹 4. Régression linéaire (sans sklearn)
 # ==============================
 st.header("📉 Régression linéaire")
 
 if len(data) > 1:
-    X = data[["Heures_Etude"]]
+    x = data["Heures_Etude"]
     y = data["Note"]
 
-    model = LinearRegression()
-    model.fit(X, y)
+    # Calcul manuel (moindres carrés)
+    a = np.cov(x, y)[0][1] / np.var(x)
+    b = y.mean() - a * x.mean()
 
-    prediction = model.predict([[5]])  # exemple 5h d'étude
+    prediction = a * 5 + b
 
-    st.write(f"📌 Note prédite pour 5h d'étude : {prediction[0]:.2f}")
+    st.write(f"📌 Note prédite pour 5h d'étude : {prediction:.2f}")
 
 # ==============================
 # 🔹 5. Classification simple
