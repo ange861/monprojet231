@@ -1,7 +1,31 @@
 import streamlit as st
 import pandas as pd
-import os
 import numpy as np
+import os
+
+# fichier de données
+FILE = "data.csv"
+
+# Charger les données (si le fichier existe)
+if os.path.exists(FILE):
+    data = pd.read_csv(FILE)
+else:
+    data = pd.DataFrame(columns=["Age", "Sexe", "Heures_Etude", "Note"])
+
+# Régression simple sans sklearn
+if len(data) > 1:
+    x = data["Heures_Etude"]
+    y = data["Note"]
+
+    # calcul manuel (moindres carrés)
+    b = np.cov(x, y)[0][1] / np.var(x)
+    a = y.mean() - b * x.mean()
+
+    prediction = a + 5 * b
+
+    st.write(f"📊 Note prédite pour 5h d’étude : {prediction:.2f}")
+else:
+    st.write("Aucune donnée disponible pour l’analyse.")
 
 # Régression simple sans sklearn
 
