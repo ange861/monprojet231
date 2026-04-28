@@ -4,6 +4,7 @@ import os
 import numpy as np
 
 # Régression simple sans sklearn
+
 if len(data) > 1:
     x = data["Heures_Etude"]
     y = data["Note"]
