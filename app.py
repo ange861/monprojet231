@@ -1,8 +1,20 @@
 import streamlit as st
 import pandas as pd
 import os
-from sklearn.linear_model import LinearRegression
 import numpy as np
+
+# Régression simple sans sklearn
+if len(data) > 1:
+    x = data["Heures_Etude"]
+    y = data["Note"]
+
+    # calcul manuel (moindres carrés)
+    a = np.cov(x, y)[0][1] / np.var(x)
+    b = y.mean() - a * x.mean()
+
+    prediction = a * 5 + b
+
+    st.write(f"📌 Note prédite pour 5h d'étude : {prediction:.2f}")
 
 st.set_page_config(page_title="Analyse des données", layout="centered")
 
